@@ -20,7 +20,7 @@ from bot.helper.telegram_helper.message_utils import *
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper import button_build
-from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, usage, count
+from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, usage, count, updates
 now=datetime.now(pytz.timezone(f'{TIMEZONE}'))
 
 
@@ -126,6 +126,8 @@ def bot_help(update, context):
 
 /{BotCommands.RestartCommand}: Restart the bot
 
+/{BotCommands.UpdateCommand}: Update Bot from Upstream Repo (Owner Only)
+
 /{BotCommands.UsageCommand}: To see Heroku Dyno Stats (Owner & Sudo only)
 
 /{BotCommands.LogCommand}: Get a log file of the bot. Handy for getting crash reports
@@ -156,7 +158,9 @@ def bot_help(update, context):
 
 /{BotCommands.StatusCommand}: Shows a status of all the downloads
 
-/{BotCommands.UsageCommand}: To see Heroku Dyno Stats (Owner & Sudo only).
+/{BotCommands.UsageCommand}: To see Heroku Dyno Stats (Owner & Sudo only)
+
+/{BotCommands.UpdateCommand}: Update Bot from Upstream Repo (Owner Only)
 
 /{BotCommands.StatsCommand}: Show Stats of the machine the bot is hosted on
 '''
@@ -187,6 +191,7 @@ botcmds = [
         (f'{BotCommands.AuthorizeCommand}','Auth chat [owner/sudo only]'),
         (f'{BotCommands.UnAuthorizeCommand}','Unauth chat [owner/sudo only]'),
         (f'{BotCommands.UsageCommand}','See dyno [owner/sudo only]'),
+        (f'{BotCommands.UpdateCommand}','Update Bot from Upstream Repo [owner/sudo only]'),
         (f'{BotCommands.AddSudoCommand}','Add sudo [owner/sudo only]'),
         (f'{BotCommands.RmSudoCommand}','Remove sudo [owner/sudo only]')
     ]
