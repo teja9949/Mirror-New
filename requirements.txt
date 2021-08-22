@@ -33,3 +33,4 @@ TgCrypto
 torrentool
 urllib3
 youtube_dl
+yt-dlp
