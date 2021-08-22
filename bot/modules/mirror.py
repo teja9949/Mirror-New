@@ -31,12 +31,13 @@ import re
 import random
 import string
 import time
+import shutil
 
 ariaDlManager = AriaDownloadHelper()
 ariaDlManager.start_listener()
 
 class MirrorListener(listeners.MirrorListeners):
-    def __init__(self, bot, update, pswd, isTar=False, extract=False, isZip=False):
+    def __init__(self, bot, update, pswd, isTar=False, extract=False, isZip=False, isQbit=False):
         super().__init__(bot, update)
         self.isTar = isTar
         self.extract = extract
@@ -81,6 +82,10 @@ class MirrorListener(listeners.MirrorListeners):
                 LOGGER.info('File to archive not found!')
                 self.onUploadError('Internal error occurred!!')
                 return
+            try:
+                shutil.rmtree(m_path)
+            except:
+                os.remove(m_path)
         elif self.extract:
             try:
                 path = fs_utils.get_base_name(m_path)

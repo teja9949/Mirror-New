@@ -66,7 +66,7 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
         else :
             sendMarkup(start_string, context.bot, update, reply_markup)
     else :
-        sendMessage(f"Oops! not a Authorized user.", context.bot, update)
+        sendMarkup(f"Oops! not a Authorized user.\nPlease deploy your own <b>Mirror Bot</b>.", context.bot, update, reply_markup)
 
 
 def restart(update, context):

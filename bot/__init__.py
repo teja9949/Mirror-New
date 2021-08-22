@@ -32,6 +32,10 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 LOGGER = logging.getLogger(__name__)
 
+CONFIG_FILE_URL = os.environ.get('CONFIG_FILE_URL', None)
+if CONFIG_FILE_URL is not None:
+    out = subprocess.run(["wget", "-q", "-O", "config.env", CONFIG_FILE_URL])
+    
 load_dotenv('config.env')
 
 Interval = []
@@ -108,6 +112,9 @@ except:
 try:
     BOT_TOKEN = getConfig('BOT_TOKEN')
     parent_id = getConfig('GDRIVE_FOLDER_ID')
+    DOWNLOAD_DIR = getConfig('DOWNLOAD_DIR')
+    if not DOWNLOAD_DIR.endswith("/"):
+        DOWNLOAD_DIR = DOWNLOAD_DIR + '/'
     DOWNLOAD_STATUS_UPDATE_INTERVAL = int(getConfig('DOWNLOAD_STATUS_UPDATE_INTERVAL'))
     OWNER_ID = int(getConfig('OWNER_ID'))
     AUTO_DELETE_MESSAGE_DURATION = int(getConfig('AUTO_DELETE_MESSAGE_DURATION'))
@@ -115,7 +122,6 @@ try:
     TELEGRAM_HASH = getConfig('TELEGRAM_HASH')
     UPSTREAM_REPO = getConfig('UPSTREAM_REPO')
     UPSTREAM_BRANCH = getConfig('UPSTREAM_BRANCH')
-    
 except KeyError as e:
     LOGGER.error("One or more env variables missing! Exiting now")
     exit(1)
@@ -150,7 +156,7 @@ if DB_URI is not None:
 LOGGER.info("Generating USER_SESSION_STRING")
 app = Client(':memory:', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, bot_token=BOT_TOKEN)
 
-#Generate Telegraph Token
+# Generate Telegraph Token
 sname = ''.join(random.SystemRandom().choices(string.ascii_letters, k=8))
 LOGGER.info("Generating TELEGRAPH_TOKEN using '" + sname + "' name")
 telegraph = Telegraph()
@@ -311,6 +317,7 @@ try:
         IGNORE_PENDING_REQUESTS = True
 except KeyError:
     pass
+
 try:
     FINISHED_PROGRESS_STR = getConfig('FINISHED_PROGRESS_STR')
     if len(FINISHED_PROGRESS_STR) == 0:
