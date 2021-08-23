@@ -2,19 +2,28 @@
 ## Setting up config file
 <details>
     <summary><b>Click Here For More Details</b></summary>
-###Mandotory Variables
+#Mandotory Variables
 - **BOT_TOKEN**: Get it from @botfather
+    
 - **GDRIVE_FOLDER_ID**: This is the folder ID of the Google Drive Folder to which you want to upload all the mirrors.
+    
 - **OWNER_ID**:  The Telegram user ID (not username) of the Owner of the bot
+    
 - **DOWNLOAD_DIR**:  Download location where files will be downloaded(for heroku keep  /usr/src/app/downloads )
+    
 - **AUTO_DELETE_MESSAGE_DURATION**: interval of time (in seconds), after which the bot deletes it's message (and command message) which is expected to be viewed instantly. (Note: Set to -1 to never automatically delete messages)
+    
 - **TELEGRAM_API**: This is to authenticate to your Telegram account for downloading Telegram files. You can get this from https://my.telegram.org DO NOT put this in quotes.
+    
 - **TELEGRAM_HASH**: This is to authenticate to your Telegram account for downloading Telegram files. You can get this from https://my.telegram.org
+    
 - **DOWNLOAD_STATUS_UPDATE_INTERVAL**: A short interval of time in seconds after which the Mirror progress message is updated. (I recommend to keep it `5` seconds at least) 
+    
 - **UPSTREAM_REPO**: Link for Bot Upstream Repo, if you want default update, fill `https://github.com/yonu74/Mirror-New`.
+    
 - **UPSTREAM_BRANCH**: Branch name for Bot Upstream Repo, fill `master`.
-
-###optional vars
+    
+#Optional Vars
 - **DATABASE_URL**: Your Database URL. See [Generate Database](https://github.com/Slam-Team/slam-mirrorbot/tree/master#generate-database) to generate database (**NOTE**: If you use database you can save your sudo id permanent using `/addsudo` command)
 - **AUTHORIZED_CHATS**: Fill user_id and chat_id (not username) of you want to authorize, Seprate them with space, Examples: `-0123456789 -1002489569`.
 - **SUDO_USERS**: Fill user_id (not username) of you want to sudoers, Seprate them with space, Examples: `0123456789 181568167` (**NOTE**: If you want save sudo id permanent without database, you must fill your sudo id there)
