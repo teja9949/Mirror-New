@@ -1,7 +1,7 @@
 from bot import START_BOT, MIRROR_BOT, UNZIP_BOT, TARMIR_BOT, CANCEL_BOT, CANCEL_ALL_BOT, LIST_BOT, STATUS_BOT
 from bot import USERS_BOT, AUTH_BOT, UNAUTH_BOT, ADDSUDO_BOT, RMSUDO_BOT, RESTART_BOT, STATS_BOT, HELP_BOT
 from bot import LOG_BOT, SPEEDTEST_BOT, CLONE_BOT, COUNT_BOT, YTDL_BOT, TARYTDL_BOT, DELETE_BOT
-from bot import CONFIG_BOT, SHELL_BOT, UPDATE_BOT, EXEHELP_BOT, ZIP_BOT, USAGE_BOT
+from bot import CONFIG_BOT, SHELL_BOT, UPDATE_BOT, EXEHELP_BOT, ZIP_BOT, USAGE_BOT, SEARCH_BOT
 
 class _BotCommands:
     def __init__(self):
@@ -33,5 +33,7 @@ class _BotCommands:
         self.ShellCommand = f'{SHELL_BOT}'
         self.UpdateCommand = f'{UPDATE_BOT}'
         self.ExecHelpCommand = f'{EXEHELP_BOT}'
+        self.LookCommand = f'{SEARCH_BOT}'
+        
 
 BotCommands = _BotCommands()

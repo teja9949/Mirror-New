@@ -112,16 +112,9 @@ except:
 try:
     BOT_TOKEN = getConfig('BOT_TOKEN')
     parent_id = getConfig('GDRIVE_FOLDER_ID')
-    DOWNLOAD_DIR = getConfig('DOWNLOAD_DIR')
-    if not DOWNLOAD_DIR.endswith("/"):
-        DOWNLOAD_DIR = DOWNLOAD_DIR + '/'
-    DOWNLOAD_STATUS_UPDATE_INTERVAL = int(getConfig('DOWNLOAD_STATUS_UPDATE_INTERVAL'))
     OWNER_ID = int(getConfig('OWNER_ID'))
-    AUTO_DELETE_MESSAGE_DURATION = int(getConfig('AUTO_DELETE_MESSAGE_DURATION'))
     TELEGRAM_API = getConfig('TELEGRAM_API')
     TELEGRAM_HASH = getConfig('TELEGRAM_HASH')
-    UPSTREAM_REPO = getConfig('UPSTREAM_REPO')
-    UPSTREAM_BRANCH = getConfig('UPSTREAM_BRANCH')
 except KeyError as e:
     LOGGER.error("One or more env variables missing! Exiting now")
     exit(1)
@@ -162,6 +155,23 @@ LOGGER.info("Generating TELEGRAPH_TOKEN using '" + sname + "' name")
 telegraph = Telegraph()
 telegraph.create_account(short_name=sname)
 telegraph_token = telegraph.get_access_token()
+
+
+DRIVE_NAME = []
+DRIVE_ID = []
+INDEX_LINK = []
+
+if os.path.exists('drive_folder'):
+    with open('drive_folder', 'r+') as f:
+        lines = f.readlines()
+        for line in lines:
+            temp = line.strip().split()
+            DRIVE_NAME.append(temp[0].replace("_", " "))
+            DRIVE_ID.append(temp[1])
+            try:
+                INDEX_LINK.append(temp[2])
+            except IndexError as e:
+                INDEX_LINK.append(None)
 
 try:
     STATUS_LIMIT = getConfig('STATUS_LIMIT')
@@ -361,6 +371,11 @@ try:
 except KeyError:
     ACCOUNTS_ZIP_URL = None
 
+if DRIVE_ID :
+    pass
+else :
+    LOGGER.error("The README.md file there to be read! Exiting now!")
+    exit(1)
 try:
     RESTARTED_GROUP_ID2 = getConfig('RESTARTED_GROUP_ID2')
     if len(RESTARTED_GROUP_ID2) == 0:
@@ -745,6 +760,62 @@ try:
         DOWNLOAD_DIR = None
 except KeyError:
     DOWNLOAD_DIR = '/usr/src/app/downloads/'
+
+try:
+    SEARCH_BOT = getConfig('SEARCH_BOT')
+    if len(SEARCH_BOT) == 0:
+        SEARCH_BOT = None
+except KeyError:
+    SEARCH_BOT = 'search'
+
+try:
+    INDEX_HOMEPAGE_URL = getConfig('INDEX_HOMEPAGE_URL')
+    if len(INDEX_HOMEPAGE_URL) == 0:
+        INDEX_HOMEPAGE_URL = None
+except KeyError:
+    INDEX_HOMEPAGE_URL = 'https://torrent.animerepublic.workers.dev/0:/'
+
+try:
+    SEARCH_TITLE = getConfig('SEARCH_TITLE')
+    if len(SEARCH_TITLE) == 0:
+        SEARCH_TITLE = None
+except KeyError:
+    SEARCH_TITLE = 'Mirror Bot'
+
+try:
+    OWNER_USERNAME = getConfig('OWNER_USERNAME')
+    if len(OWNER_USERNAME) == 0:
+        OWNER_USERNAME = None
+except KeyError:
+    OWNER_USERNAME = 'arata74'
+
+try:
+    UPSTREAM_BRANCH = getConfig('UPSTREAM_BRANCH')
+    if len(UPSTREAM_BRANCH) == 0:
+        UPSTREAM_BRANCH = None
+except KeyError:
+    UPSTREAM_BRANCH = 'main'
+
+try:
+    UPSTREAM_REPO = getConfig('UPSTREAM_REPO')
+    if len(UPSTREAM_REPO) == 0:
+        UPSTREAM_REPO = None
+except KeyError:
+    UPSTREAM_REPO = 'https://github.com/yuno74/Mirror-New'
+
+try:
+    AUTO_DELETE_MESSAGE_DURATION = getConfig('AUTO_DELETE_MESSAGE_DURATION')
+    if len(AUTO_DELETE_MESSAGE_DURATION) == 0:
+        AUTO_DELETE_MESSAGE_DURATION = None
+except KeyError:
+    AUTO_DELETE_MESSAGE_DURATION = '-1'
+
+try:
+    DOWNLOAD_STATUS_UPDATE_INTERVAL = getConfig('DOWNLOAD_STATUS_UPDATE_INTERVAL')
+    if len(DOWNLOAD_STATUS_UPDATE_INTERVAL) == 0:
+        DOWNLOAD_STATUS_UPDATE_INTERVAL = None
+except KeyError:
+    DOWNLOAD_STATUS_UPDATE_INTERVAL = '10'
 
 updater = tg.Updater(token=BOT_TOKEN)
 bot = updater.bot

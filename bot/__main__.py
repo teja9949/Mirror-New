@@ -20,7 +20,7 @@ from bot.helper.telegram_helper.message_utils import *
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper import button_build
-from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, usage, count, updates
+from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, usage, count, updates, look
 now=datetime.now(pytz.timezone(f'{TIMEZONE}'))
 
 
@@ -110,6 +110,8 @@ def bot_help(update, context):
 
 /{BotCommands.ListCommand} [search term]: Searches the search term in the Google Drive, If found replies with the link
 
+/{BotCommands.LookCommand} [search term]: Searches the for all drive
+
 /{BotCommands.StatusCommand}: Shows a status of all the downloads
 
 /{BotCommands.StatsCommand}: Show Stats of the machine the bot is hosted on
@@ -156,6 +158,8 @@ def bot_help(update, context):
 
 /{BotCommands.ListCommand} [search term]: Searches the search term in the Google Drive, If found replies with the link
 
+/{BotCommands.LookCommand} [search term]: Searches the for all drive
+
 /{BotCommands.StatusCommand}: Shows a status of all the downloads
 
 /{BotCommands.UsageCommand}: To see Heroku Dyno Stats (Owner & Sudo only)
@@ -192,6 +196,7 @@ botcmds = [
         (f'{BotCommands.UnAuthorizeCommand}','Unauth chat [owner/sudo only]'),
         (f'{BotCommands.UsageCommand}','See dyno [owner/sudo only]'),
         (f'{BotCommands.UpdateCommand}','Update Bot from Upstream Repo [owner/sudo only]'),
+        (f'{BotCommands.LookCommand}','Searches files in All Drive'),
         (f'{BotCommands.AddSudoCommand}','Add sudo [owner/sudo only]'),
         (f'{BotCommands.RmSudoCommand}','Remove sudo [owner/sudo only]')
     ]
