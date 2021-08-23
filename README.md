@@ -3,7 +3,8 @@
 <details>
     <summary><b>Click Here For More Details</b></summary>
 #Mandotory Variables
-- **BOT_TOKEN**: Get it from @botfather
+
+ - **BOT_TOKEN**: Get it from @botfather
     
 - **GDRIVE_FOLDER_ID**: This is the folder ID of the Google Drive Folder to which you want to upload all the mirrors.
     
