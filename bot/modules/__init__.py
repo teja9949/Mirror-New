@@ -4,8 +4,8 @@ DRIVE_NAME = []
 DRIVE_ID = []
 INDEX_URL = []
 
-if os.path.exists('drivef_folder'):
-    with open('drivef_folder', 'r+') as f:
+if os.path.exists('drive_folder'):
+    with open('drive_folder', 'r+') as f:
         lines = f.readlines()
         for line in lines:
             temp = line.strip().split()
