@@ -1,4 +1,114 @@
+**This Mirror Bot** is a _multipurpose_ Telegram Bot writen in Python for mirroring files on the Internet to our beloved Google Drive.
 
+# Features supported:
+<details>
+    <summary><b>Click Here For More Details</b></summary>
+
+## Additional Features
+- Updater (**NOTE**: You must upload your **token.pickle** to Index and fill your **token.pickle** url to **TOKEN_PICKLE_URL**, because your **token.pickle** will deleted after update, for more info please check [Setting up config file](https://github.com/yuno74/Mirror-New#setting-up-config-file))
+- Limiting size Torrent/Direct, Tar/Unzip, Mega, cloning Google Drive support
+- Stop duplicate cloning Google Drive & mirroring Mega support
+- Tar/Unzip Google Drive link support
+- Select files from Torrent before downloading
+- Sudo with Database support
+- Multiple Trackers support
+- Extracting **tar.xz** support
+- Counting Google Drive link
+- Heroku config support
+- View Link button
+- Shell and Executor
+- Direct links Supported:
+```
+letsupload.io, hxfile.co, anonfiles.com, bayfiles.com, antfiles,
+fembed.com, fembed.net, femax20.com, layarkacaxxi.icu, fcdn.stream,
+sbplay.org, naniplay.com, naniplay.nanime.in, naniplay.nanime.biz, sbembed.com,
+streamtape.com, streamsb.net, feurl.com, pixeldrain.com, racaty.net,
+1fichier.com, 1drv.ms (Only works for file not folder or business account),
+uptobox.com (Uptobox account must be premium), solidfiles.com
+```
+
+## From Original Repos
+- Mirroring direct download links, Torrent, and Telegram files to Google Drive
+- Mirroring Mega.nz links to Google Drive (If your Mega account not premium, it will limit 5GB/6 hours)
+- Copy files from someone's Drive to your Drive (Using Autorclone)
+- Download/Upload progress, Speeds and ETAs
+- Mirror all Youtube-dl supported links
+- Docker support
+- Uploading to Team Drive
+- Index Link support
+- Service Account support
+- Delete files from Drive
+- Shortener support
+- Custom Filename (Only for URL, Telegram files and Youtube-dl. Not for Mega links and Magnet/Torrents)
+- Extracting password protected files, using custom filename and download from password protected Index Links see these examples:
+<p><a href="https://telegra.ph/Magneto-Python-Aria---Custom-Filename-Examples-01-20"> <img src="https://img.shields.io/badge/see%20on%20telegraph-grey?style=for-the-badge" width="190""/></a></p>
+
+- Extract these filetypes and uploads to Google Drive
+```
+ZIP, RAR, TAR, 7z, ISO, WIM, CAB, GZIP, BZIP2, 
+APM, ARJ, CHM, CPIO, CramFS, DEB, DMG, FAT, 
+HFS, LZH, LZMA, LZMA2, MBR, MSI, MSLZ, NSIS, 
+NTFS, RPM, SquashFS, UDF, VHD, XAR, Z.
+```
+
+</details>
+
+# How to deploy?
+Deploying is pretty much straight forward and is divided into several steps as follows:
+## Installing requirements
+
+- Clone this repo:
+```
+git clone https://github.com/Slam-Team/slam-mirrorbot mirrorbot/
+cd mirrorbot
+```
+
+- Install requirements
+For Debian based distros
+```
+sudo apt install python3
+```
+Install Docker by following the [official Docker docs](https://docs.docker.com/engine/install/debian/)
+
+- For Arch and it's derivatives:
+```
+sudo pacman -S docker python
+```
+- Install dependencies for running setup scripts:
+```
+pip3 install -r requirements-cli.txt
+```
+## Generate Database
+<details>
+    <summary><b>Click Here For More Details</b></summary>
+
+**1. Using ElephantSQL**
+- Go to https://elephantsql.com/ and create account (skip this if you already have ElephantSQL account)
+- Hit **Create New Instance**
+- Follow the further instructions in the screen
+- Hit **Select Region**
+- Hit **Review**
+- Hit **Create instance**
+- Select your database name
+- Copy your database url, and fill to **DATABASE_URL** in config
+
+**2. Using Heroku PostgreSQL**
+<p><a href="https://dev.to/prisma/how-to-setup-a-free-postgresql-database-on-heroku-1dc1"> <img src="https://img.shields.io/badge/see%20on%20dev.to-black?style=for-the-badge&logo=dev-dot-to" width="190""/></a></p>
+    
+## Deploying
+
+- Start Docker daemon (skip if already running):
+```
+sudo dockerd
+```
+- Build Docker image:
+```
+docker build . --rm --force-rm --compress --no-cache=true --pull --file Dockerfile -t mirrorbot
+```
+- Run the image:
+```
+sudo docker run mirrorbot
+```
 ## Setting up config file
 <details>
     <summary><b>Click Here For More Details</b></summary>
@@ -25,7 +135,7 @@
 - **UPSTREAM_BRANCH**: Branch name for Bot Upstream Repo, fill `master`.
     
 #Optional Vars
-- **DATABASE_URL**: Your Database URL. See [Generate Database](https://github.com/Slam-Team/slam-mirrorbot/tree/master#generate-database) to generate database (**NOTE**: If you use database you can save your sudo id permanent using `/addsudo` command)
+- **DATABASE_URL**: Your Database URL. See [Generate Database](https://github.com/yuno74/Mirror-New/tree/master#generate-database) to generate database (**NOTE**: If you use database you can save your sudo id permanent using `/addsudo` command)
 - **AUTHORIZED_CHATS**: Fill user_id and chat_id (not username) of you want to authorize, Seprate them with space, Examples: `-0123456789 -1002489569`.
 - **SUDO_USERS**: Fill user_id (not username) of you want to sudoers, Seprate them with space, Examples: `0123456789 181568167` (**NOTE**: If you want save sudo id permanent without database, you must fill your sudo id there)
 - **IGNORE_PENDING_REQUESTS**: If you want the bot to ignore pending requests after it restarts, set this to `True`.
