@@ -17,6 +17,7 @@
 - Heroku config support
 - View Link button
 - Shell and Executor
+- YT-DLP
 - Direct links Supported:
 ```
 letsupload.io, hxfile.co, anonfiles.com, bayfiles.com, antfiles,
