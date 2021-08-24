@@ -206,10 +206,10 @@ def main():
     # Heroku restarted
     GROUP_ID = f'{RESTARTED_GROUP_ID}'
     kie = datetime.now(pytz.timezone(f'{TIMEZONE}'))
-    jam = kie.strftime('\n📅 Date: %d/%m/%Y\n⏲️ Time: %I:%M%P\n🌏 Country: 🇲🇾')
+    jam = kie.strftime('\n📅 𝘿𝘼𝙏𝙀: %d/%m/%Y\n⏲️ 𝙏𝙄𝙈𝙀: %I:%M%P')
     if GROUP_ID is not None and isinstance(GROUP_ID, str):        
         try:
-            dispatcher.bot.sendMessage(f"{GROUP_ID}", f"♻️ BOT GOT RESTARTED ♻️\n{jam}\n\nPlease Redownload again\n\n#restarted")
+            dispatcher.bot.sendMessage(f"{GROUP_ID}", f"♻️ 𝐁𝐎𝐓 𝐆𝐎𝐓 𝐑𝐄𝐒𝐓𝐀𝐑𝐓𝐄𝐃 ♻️\n{jam}\n\n🗺️ 𝙏𝙄𝙈𝙀 𝙕𝙊𝙉𝙀\n{TIMEZONE}\n\n𝙿𝙻𝙴𝙰𝚂𝙴 𝚁𝙴-𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙰𝙶𝙰𝙸𝙽\n\n#Restarted")
         except Unauthorized:
             LOGGER.warning(
                 "Bot isnt able to send message to support_chat, go and check!"
@@ -220,10 +220,10 @@ def main():
 # Heroku restarted
     GROUP_ID2 = f'{RESTARTED_GROUP_ID2}'
     kie = datetime.now(pytz.timezone(f'{TIMEZONE}'))
-    jam = kie.strftime('\n📅 Date: %d/%m/%Y\n⏲️ Time: %I:%M%P\n🌏 Country: 🇲🇾')
+    jam = kie.strftime('\n📅 𝘿𝘼𝙏𝙀: %d/%m/%Y\n⏲️ 𝙏𝙄𝙈𝙀: %I:%M%P')
     if GROUP_ID2 is not None and isinstance(GROUP_ID2, str):        
         try:
-            dispatcher.bot.sendMessage(f"{GROUP_ID2}", f"♻️ BOT GOT RESTARTED ♻️\n{jam}\n\nPlease Redownload again\n\n#restarted")
+            dispatcher.bot.sendMessage(f"{GROUP_ID2}", f"♻️ 𝐁𝐎𝐓 𝐆𝐎𝐓 𝐑𝐄𝐒𝐓𝐀𝐑𝐓𝐄𝐃 ♻️\n{jam}\n\n🗺️ 𝙏𝙄𝙈𝙀 𝙕𝙊𝙉𝙀\n{TIMEZONE}\n\n𝙿𝙻𝙴𝙰𝚂𝙴 𝚁𝙴-𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙰𝙶𝙰𝙸𝙽\n\n#Restarted")
         except Unauthorized:
             LOGGER.warning(
                 "Bot isnt able to send message to support_chat, go and check!"
@@ -232,15 +232,11 @@ def main():
             LOGGER.warning(e.message)            
             
     fs_utils.start_cleanup()
-
-    if IS_VPS:
-        asyncio.get_event_loop().run_until_complete(start_server_async(SERVER_PORT))
-
     # Check if the bot is restarting
     if os.path.isfile(".restartmsg"):
         with open(".restartmsg") as f:
             chat_id, msg_id = map(int, f)
-        bot.edit_message_text("🔄️ Restarted successfully!", chat_id, msg_id)
+        bot.edit_message_text("📶 𝐑𝐄𝐒𝐓𝐀𝐑𝐓 𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘", chat_id, msg_id)
         os.remove(".restartmsg")
     bot.set_my_commands(botcmds)
 
