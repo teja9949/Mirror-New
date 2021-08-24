@@ -64,7 +64,7 @@ Deploying is pretty much straight forward and is divided into several steps as f
 
 - Clone this repo:
 ```
-git clone https://github.com/Slam-Team/slam-mirrorbot mirrorbot/
+git clone https://github.com/yuno74/Mirror-New mirrorbot/
 cd mirrorbot
 ```
 
