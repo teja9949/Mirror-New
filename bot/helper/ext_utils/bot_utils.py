@@ -21,13 +21,13 @@ PAGE_NO = 1
 
 
 class MirrorStatus:
-    STATUS_UPLOADING = "📤 ᴜᴘʟᴏᴀᴅɪɴɢ 📤"
-    STATUS_DOWNLOADING = "📥 ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ 📥"
-    STATUS_CLONING = "♻ ️ᴄʟᴏɴɪɴɢ"
-    STATUS_WAITING = "📄 ǫᴜᴇǫᴇᴅ"
-    STATUS_FAILED = "🚫 ғᴀɪʟᴇᴅ"
-    STATUS_ARCHIVING = "🔐 ᴀʀᴄʜɪᴠɪɴɢ"
-    STATUS_EXTRACTING = "📂 ᴇxᴛʀᴀᴄᴛɪɴɢ"
+    STATUS_UPLOADING = "🅄🄿🄻🄾🄰🄳🄸🄽🄶"
+    STATUS_DOWNLOADING = "🄳🄾🅆🄽🄻🄾🄰🄳🄸🄽🄶"
+    STATUS_CLONING = "🄲🄻🄾🄽🄽🄸🄽🄶"
+    STATUS_WAITING = "🅀🅄🄴🅀🅄🄴🄳"
+    STATUS_FAILED = "🄵🄰🄸🄻🄴🄳"
+    STATUS_ARCHIVING = "🄰🅁🄲🄷🄸🅅🄸🄽🄶"
+    STATUS_EXTRACTING = "🄴🅇🅃🅁🄰🄲🅃🄸🄽🄶"
 
 
 PROGRESS_MAX_SIZE = 100 // 8
@@ -64,7 +64,7 @@ def get_readable_file_size(size_in_bytes) -> str:
     try:
         return f'{round(size_in_bytes, 2)}{SIZE_UNITS[index]}'
     except IndexError:
-        return 'File too large'
+        return '𝙵𝙸𝙻𝙴 𝚃𝙾𝙾 𝙻𝙰𝚁𝙶𝙴'
 
 
 def getDownloadByGid(gid):
@@ -119,28 +119,30 @@ def get_readable_message():
         for download in list(download_dict.values()):
             INDEX += 1
             if INDEX > COUNT:
-                msg += f"<b>📁 Filename:</b> <code>{download.name()}</code>"
-                msg += f"\n<b>ℹ️ Status:</b> <i>{download.status()}</i>"
+                msg += f"\n<b>ℹ️ 𝚂𝚃𝙰𝚃𝚄𝚂 ℹ️</b>\n<i>{download.status()}</i>\n"
+                msg += f"<b>📁 𝙵𝙸𝙻𝙴 𝙽𝙰𝙼𝙴:</b> <code>{download.name()}</code>"
                 if download.status() != MirrorStatus.STATUS_ARCHIVING and download.status() != MirrorStatus.STATUS_EXTRACTING:
                     msg += f"\n<code>{get_progress_bar_string(download)} {download.progress()}</code>"
                     if download.status() == MirrorStatus.STATUS_DOWNLOADING:
-                        msg += f"\n<b>📥 Downloaded:</b> {get_readable_file_size(download.processed_bytes())}<b>\n💾 Size</b>: {download.size()}"
+                        msg += f"\n<b>📥 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝙳:</b> {get_readable_file_size(download.processed_bytes())}<b>\n💾 𝚂𝙸𝚉𝙴</b>: {download.size()}"
                     elif download.status() == MirrorStatus.STATUS_CLONING:
-                        msg += f"\n<b>♻️ Cloning:</b> {get_readable_file_size(download.processed_bytes())}<b>\n<b>⚙️ Engine: ʀᴄʟᴏɴᴇ</b>\n💾 Size</b>: {download.size()}"
+                        msg += f"\n<b>♻️ 𝙲𝙻𝙾𝙽𝙸𝙽𝙶:</b> {get_readable_file_size(download.processed_bytes())}<b>\n<b>⚙️ 𝙴𝙽𝙶𝙸𝙽𝙴: ⓇⒸⓁⓄⓃⒺ</b>\n💾 𝚂𝙸𝚉𝙴</b>: {download.size()}"
                     else:
-                        msg += f"\n<b>📤 Uploaded:</b> {get_readable_file_size(download.processed_bytes())}<b>\n<b>⚙️ Engine: ʀᴄʟᴏɴᴇ</b>\n💾 Size</b>: {download.size()}"
-                    msg += f"\n<b>⚡ Speed:</b> {download.speed()}" \
-                            f"\n<b>⏲️ ETA:</b> {download.eta()} "
+                        msg += f"\n<b>📤 𝚄𝙿𝙻𝙾𝙰𝙳𝙴𝙳:</b> {get_readable_file_size(download.processed_bytes())}<b>\n<b>⚙️ 𝙴𝙽𝙶𝙸𝙽𝙴: ⓇⒸⓁⓄⓃⒺ</b>\n💾 𝚂𝙸𝚉𝙴</b>: {download.size()}"
+                    msg += f"\n<b>⚡ 𝚂𝙿𝙴𝙴𝙳:</b> {download.speed()}" \
+                            f"\n<b>⏲️ 𝙴𝚃𝙰:</b> {download.eta()} "
                     # if hasattr(download, 'is_torrent'):
                     try:
-                        msg += f"\n<b>👥 User:</b> <b>{download.message.from_user.first_name}</b>\n<b>⚠️ Warn:</b><code>/warn {download.message.from_user.id}</code>"
+                        msg += f"\n<b>👥 𝚄𝚂𝙴𝚁:</b> <b>{download.message.from_user.first_name}</b>\n<b>⚠️ 𝚆𝙰𝚁𝙽:</b><code>/warn {download.message.from_user.id}</code>"
                     except:
                         pass
                     try:
-                        msg += f"\n<b>⚙️ Engine: Aria2</b>\n<b>🌍:</b> {download.aria_download().connections} | <b>🌱:</b> {download.aria_download().num_seeders}"
+                        msg += f"\n<b>⚙️ 𝙴𝙽𝙶𝙸𝙽𝙴: 🅐🅡🅘🅐</b>\n<b>🌍:</b> {download.aria_download().connections} | <b>🌱:</b> {download.aria_download().num_seeders}"
                     except:
-                        pass
-                    msg += f"\n<b>⛔ Cancel:</b> <code>/{BotCommands.CancelMirror} {download.gid()}</code>"
+                        msg += f"\n<b>⚙️ 𝙴𝙽𝙶𝙸𝙽𝙴: 🅐🅡🅘🅐</b>\n<b>📶:</b> {download.aria_download().connections}"
+                    else
+                        pass    
+                    msg += f"\n<b>⛔ 𝙲𝙰𝙽𝙲𝙴𝙻:</b> <code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += "\n\n"
                 if STATUS_LIMIT is not None:
                     if INDEX >= COUNT + STATUS_LIMIT:
@@ -149,7 +151,7 @@ def get_readable_message():
             if INDEX > COUNT + STATUS_LIMIT:
                 return None, None
             if dick_no > STATUS_LIMIT:
-                msg += f"Page: <code>{PAGE_NO}/{pages}</code> | <code>Tasks: {dick_no}</code>\n"
+                msg += f"📖 𝙿𝙰𝙶𝙴: <code>{PAGE_NO}/{pages}</code> | <code>📄 𝚃𝙰𝚂𝙺𝚂: {dick_no}</code>\n"
                 buttons = button_build.ButtonMaker()
                 buttons.sbutton("⬅️", "pre")
                 buttons.sbutton("➡️", "nex")
