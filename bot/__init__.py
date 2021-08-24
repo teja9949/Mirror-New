@@ -779,6 +779,13 @@ except KeyError:
     logging.warning('SERVER_PORT not provided!')
     SERVER_PORT = None
 
+try:
+    REBOOT_BOT = getConfig('REBOOT_BOT')
+    if len(REBOOT_BOT) == 0:
+        REBOOT_BOT = None
+except KeyError:
+    REBOOT_BOT = 'reboot'
+
 updater = tg.Updater(token=BOT_TOKEN)
 bot = updater.bot
 dispatcher = updater.dispatcher
