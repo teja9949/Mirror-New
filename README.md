@@ -159,21 +159,15 @@ Three buttons are already added of Drive Link, Index Link, and View Link, you ca
 - **BUTTON_SIX_URL**:
   
 ## Others
-- **BOT_USERNAME**: Username of Bot without "@"
 - **CHANNEL_LINK**: Link of your Channenl
 - **SUPPORT_LINK**: Link of Your Support Group
 - **RESTARTED_GROUP_ID**: ID of group where Bot will send restart message
-- **RESTARTED_GROUP_ID2**:  ID of group where Bot will send restart message
+- **RESTARTED_GROUP_ID2**:  Second ID of group where Bot will send restart message
 
 ## Progress bar    
 - **FINISHED_PROGRESS_STR**: Single character for finished progress. #Get yours from https://coolsymbol.com    
 - **UNFINISHED_PROGRESS_STR**: Single character for unfinished progress. #Get yours from https://coolsymbol.com
     
-## Search All Drive    
-- **INDEX_HOMEPAGE_URL**: Homepage of Your Index. Example: `xyz.mirbot.workers.dev/0:`
-- **SEARCH_TITLE**: Title For search all
-- **OWNER_USERNAME**: Yourusername without `@`
-
 
 ## Generate Database
 <details>
