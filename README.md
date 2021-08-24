@@ -112,7 +112,7 @@ sudo docker run mirrorbot
 ## Setting up config file
 <details>
     <summary><b>Click Here For More Details</b></summary>
-#Mandotory Variables
+#**Mandotory Variables**
 
  - **BOT_TOKEN**: Get it from @botfather
     
@@ -134,7 +134,7 @@ sudo docker run mirrorbot
     
 - **UPSTREAM_BRANCH**: Branch name for Bot Upstream Repo, fill `master`.
     
-#Optional Vars
+#**Optional Vars**
 - **DATABASE_URL**: Your Database URL. See [Generate Database](https://github.com/yuno74/Mirror-New/tree/master#generate-database) to generate database (**NOTE**: If you use database you can save your sudo id permanent using `/addsudo` command)
 - **AUTHORIZED_CHATS**: Fill user_id and chat_id (not username) of you want to authorize, Seprate them with space, Examples: `-0123456789 -1002489569`.
 - **SUDO_USERS**: Fill user_id (not username) of you want to sudoers, Seprate them with space, Examples: `0123456789 181568167` (**NOTE**: If you want save sudo id permanent without database, you must fill your sudo id there)
@@ -161,9 +161,11 @@ exe.io, gplinks.in, shrinkme.io, urlshortx.com, shortzon.com
 - **TOKEN_PICKLE_URL**: Only if you want to load your **token.pickle** externally from an Index Link. Fill this with the direct link of that file.
 - **ACCOUNTS_ZIP_URL**: Only if you want to load your Service Account externally from an Index Link. Archive the accounts folder to a zip file. Fill this with the direct link of that file.
     If  you don't know how to create token.pickle, [CLick Here](https://github.com/yuno74/Mirror-New/blob/main/CreateSA.md)
+    
 ###Heroku Details
 - **HEROKU_APP_NAME**: (Only if you deploying on Heroku) Your Heroku app name.
 - **HEROKU_API_KEY**: (Only if you deploying on Heroku) Your Heroku API key, get it from [Heroku Settings](https://dashboard.heroku.com/account)
+
 ###To Use Limits
 - **CLONE_LIMIT**: To limit cloning Google Drive (leave space between number and unit, Available units is (gb or GB, tb or TB), Examples: `100 gb, 100 GB`
 - **MEGA_LIMIT**: To limit downloading Mega (leave space between number and unit, Available units is (gb or GB, tb or TB), Examples: `100 gb, 100 GB`
@@ -185,8 +187,14 @@ BUTTON_SIX_URL :
 - **RESTARTED_GROUP_ID**: ID of group where Bot will send restart message
 - **RESTARTED_GROUP_ID2**:  ID of group where Bot will send restart message
 
-#progress bar
+###progress bar
 FINISHED_PROGRESS_STR : Single character for finished progress. #Get yours from https://coolsymbol.com
+    
 UNFINISHED_PROGRESS_STR : Single character for unfinished progress. #Get yours from https://coolsymbol.com
+    
+###Search All Drive
+- **INDEX_HOMEPAGE_URL**: Homepage of Your Index. Example: `xyz.mirbot.workers.dev/0:`
+- **SEARCH_TITLE**: Title For search all
+- **OWNER_USERNAME**: Yourusername without `@`
 
 
