@@ -4,23 +4,23 @@ import os
 import asyncio
 
 from pyrogram import idle
-from bot import app, SUPPORT_LINK, CHANNEL_LINK, AUTHORIZED_CHATS, TIMEZONE, RESTARTED_GROUP_ID2
+from bot import app, SUPPORT_LINK, CHANNEL_LINK, AUTHORIZED_CHATS, TIMEZONE, RESTARTED_GROUP_ID, RESTARTED_GROUP_ID2, alive
 from sys import executable
 from datetime import datetime
 import pytz
 import time
 
-from telegram.error import BadRequest, Unauthorized
-from telegram import ParseMode, BotCommand
+from telegram import ParseMode
 from telegram.ext import CommandHandler
-from bot import bot, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, TIMEZONE, RESTARTED_GROUP_ID
+from wserver import start_server_async
+from bot import bot, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, IS_VPS, SERVER_PORT
 from bot.helper.ext_utils import fs_utils
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.message_utils import *
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper import button_build
-from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, usage, count
+from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, usage, count, look, reboot
 now=datetime.now(pytz.timezone(f'{TIMEZONE}'))
 
 
@@ -66,7 +66,7 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
         else :
             sendMarkup(start_string, context.bot, update, reply_markup)
     else :
-        sendMessage(f"Oops! not a Authorized user.", context.bot, update)
+        sendMarkup(f"Oops! not a Authorized user.\nPlease deploy your own <b>Mirror Bot</b>.", context.bot, update, reply_markup)
 
 
 def restart(update, context):
@@ -76,6 +76,7 @@ def restart(update, context):
         f.truncate(0)
         f.write(f"{restart_message.chat.id}\n{restart_message.message_id}\n")
     fs_utils.clean_all()
+    alive.terminate()
     os.execl(executable, executable, "-m", "bot")
 
 def log(update, context):
@@ -87,6 +88,10 @@ def bot_help(update, context):
 /{BotCommands.HelpCommand}: To get this message
 
 /{BotCommands.MirrorCommand} [download_url][magnet_link]: Start mirroring the link to Google Drive
+
+<code>/{BotCommands.MirrorCommand} qb</code> [download_url][magnet_link]: Start mirroring the link to Google Drive using qbittorrent
+
+<code>/{BotCommands.MirrorCommand} qbs</code> [download_url][magnet_link]: Start mirroring the link to Google Drive and Select file before downloading using qbittorrent
 
 /{BotCommands.TarMirrorCommand} [download_url][magnet_link]: Start mirroring and upload the archived (.tar) version of the download
 
@@ -110,6 +115,8 @@ def bot_help(update, context):
 
 /{BotCommands.ListCommand} [search term]: Searches the search term in the Google Drive, If found replies with the link
 
+/{BotCommands.LookCommand} [search term]: Searches the for all drive
+
 /{BotCommands.StatusCommand}: Shows a status of all the downloads
 
 /{BotCommands.StatsCommand}: Show Stats of the machine the bot is hosted on
@@ -126,6 +133,7 @@ def bot_help(update, context):
 
 /{BotCommands.RestartCommand}: Restart the bot
 
+
 /{BotCommands.UsageCommand}: To see Heroku Dyno Stats (Owner & Sudo only)
 
 /{BotCommands.LogCommand}: Get a log file of the bot. Handy for getting crash reports
@@ -135,6 +143,10 @@ def bot_help(update, context):
 /{BotCommands.HelpCommand}: To get this message
 
 /{BotCommands.MirrorCommand} [download_url][magnet_link]: Start mirroring the link to Google Drive
+
+<code>/{BotCommands.MirrorCommand} qb</code> [download_url][magnet_link]: Start mirroring the link to Google Drive using qbittorrent
+
+<code>/{BotCommands.MirrorCommand} qbs</code> [download_url][magnet_link]: Start mirroring the link to Google Drive and Select file before downloading using qbittorrent
 
 /{BotCommands.TarMirrorCommand} [download_url][magnet_link]: Start mirroring and upload the archived (.tar) version of the download
 
@@ -154,9 +166,12 @@ def bot_help(update, context):
 
 /{BotCommands.ListCommand} [search term]: Searches the search term in the Google Drive, If found replies with the link
 
+/{BotCommands.LookCommand} [search term]: Searches the for all drive
+
 /{BotCommands.StatusCommand}: Shows a status of all the downloads
 
-/{BotCommands.UsageCommand}: To see Heroku Dyno Stats (Owner & Sudo only).
+/{BotCommands.UsageCommand}: To see Heroku Dyno Stats (Owner & Sudo only)
+
 
 /{BotCommands.StatsCommand}: Show Stats of the machine the bot is hosted on
 '''
@@ -187,6 +202,7 @@ botcmds = [
         (f'{BotCommands.AuthorizeCommand}','Auth chat [owner/sudo only]'),
         (f'{BotCommands.UnAuthorizeCommand}','Unauth chat [owner/sudo only]'),
         (f'{BotCommands.UsageCommand}','See dyno [owner/sudo only]'),
+        (f'{BotCommands.LookCommand}','Searches files in All Drive'),
         (f'{BotCommands.AddSudoCommand}','Add sudo [owner/sudo only]'),
         (f'{BotCommands.RmSudoCommand}','Remove sudo [owner/sudo only]')
     ]
@@ -222,6 +238,10 @@ def main():
             LOGGER.warning(e.message)            
             
     fs_utils.start_cleanup()
+
+    if IS_VPS:
+        asyncio.get_event_loop().run_until_complete(start_server_async(SERVER_PORT))
+
     # Check if the bot is restarting
     if os.path.isfile(".restartmsg"):
         with open(".restartmsg") as f:

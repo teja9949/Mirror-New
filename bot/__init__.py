@@ -7,6 +7,7 @@ import string
 import subprocess
 
 import aria2p
+import qbittorrentapi as qba
 import telegram.ext as tg
 from dotenv import load_dotenv
 from pyrogram import Client
@@ -32,7 +33,15 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 LOGGER = logging.getLogger(__name__)
 
+CONFIG_FILE_URL = os.environ.get('CONFIG_FILE_URL', None)
+if CONFIG_FILE_URL is not None:
+    out = subprocess.run(["wget", "-q", "-O", "config.env", CONFIG_FILE_URL])
+    if out.returncode != 0:
+        logging.error(out)
+
 load_dotenv('config.env')
+
+alive = subprocess.Popen(["python3", "alive.py"])
 
 Interval = []
 
@@ -66,6 +75,18 @@ aria2 = aria2p.API(
         secret="",
     )
 )
+
+
+def get_client() -> qba.TorrentsAPIMixIn:
+    qb_client = qba.Client(host="localhost", port=8090, username="admin", password="adminadmin")
+    try:
+        qb_client.auth_log_in()
+        qb_client.application.set_preferences({"disk_cache":64, "incomplete_files_ext":True, "max_connec":3000, "max_connec_per_torrent":300, "async_io_threads":8, "preallocate_all":True, "upnp":True, "dl_limit":-1, "up_limit":-1, "dht":True, "pex":True, "lsd":True, "encryption":0, "queueing_enabled":True, "max_active_downloads":15, "max_active_torrents":50, "dont_count_slow_torrents":True, "bittorrent_protocol":0, "recheck_completed_torrents":True, "enable_multi_connections_from_same_ip":True, "slow_torrent_dl_rate_threshold":100,"slow_torrent_inactive_timer":600})
+        return qb_client
+    except qba.LoginFailed as e:
+        LOGGER.error(str(e))
+        return None
+
 
 DOWNLOAD_DIR = None
 BOT_TOKEN = None
@@ -108,6 +129,9 @@ except:
 try:
     BOT_TOKEN = getConfig('BOT_TOKEN')
     parent_id = getConfig('GDRIVE_FOLDER_ID')
+    DOWNLOAD_DIR = getConfig('DOWNLOAD_DIR')
+    if not DOWNLOAD_DIR.endswith("/"):
+        DOWNLOAD_DIR = DOWNLOAD_DIR + '/'
     DOWNLOAD_STATUS_UPDATE_INTERVAL = int(getConfig('DOWNLOAD_STATUS_UPDATE_INTERVAL'))
     OWNER_ID = int(getConfig('OWNER_ID'))
     AUTO_DELETE_MESSAGE_DURATION = int(getConfig('AUTO_DELETE_MESSAGE_DURATION'))
@@ -147,7 +171,7 @@ if DB_URI is not None:
 LOGGER.info("Generating USER_SESSION_STRING")
 app = Client(':memory:', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, bot_token=BOT_TOKEN)
 
-#Generate Telegraph Token
+# Generate Telegraph Token
 sname = ''.join(random.SystemRandom().choices(string.ascii_letters, k=8))
 LOGGER.info("Generating TELEGRAPH_TOKEN using '" + sname + "' name")
 telegraph = Telegraph()
@@ -685,7 +709,7 @@ try:
     if len(AUTHOR_URL) == 0:
         AUTHOR_URL = None
 except KeyError:
-    AUTHOR_URL = ''
+    AUTHOR_URL = 'http://t.me/arata74'
 
 try:
     TELEGRAPH_DRIVE = getConfig('TELEGRAPH_DRIVE')
@@ -730,11 +754,49 @@ except KeyError:
     ZIP_BOT = 'zip'
 
 try:
-    DOWNLOAD_DIR = getConfig('DOWNLOAD_DIR')
-    if len(DOWNLOAD_DIR) == 0:
-        DOWNLOAD_DIR = None
+    SEARCH_BOT = getConfig('SEARCH_BOT')
+    if len(SEARCH_BOT) == 0:
+        SEARCH_BOT = None
 except KeyError:
-    DOWNLOAD_DIR = '/usr/src/app/downloads/'
+    SEARCH_BOT = 'search'
+
+try:
+    INDEX_HOMEPAGE_URL = getConfig('INDEX_HOMEPAGE_URL')
+    if len(INDEX_HOMEPAGE_URL) == 0:
+        INDEX_HOMEPAGE_URL = None
+except KeyError:
+    INDEX_HOMEPAGE_URL = 'https://torrent.animerepublic.workers.dev/0:/'
+
+try:
+    SEARCH_TITLE = getConfig('SEARCH_TITLE')
+    if len(SEARCH_TITLE) == 0:
+        SEARCH_TITLE = None
+except KeyError:
+    SEARCH_TITLE = 'Mirror Bot'
+
+try:
+    OWNER_USERNAME = getConfig('OWNER_USERNAME')
+    if len(OWNER_USERNAME) == 0:
+        OWNER_USERNAME = None
+except KeyError:
+    OWNER_USERNAME = 'arata74'
+
+try:
+    IS_VPS = getConfig('IS_VPS')
+    if IS_VPS.lower() == 'true':
+        IS_VPS = True
+    else:
+        IS_VPS = False
+except KeyError:
+    IS_VPS = False
+
+try:
+    SERVER_PORT = getConfig('SERVER_PORT')
+    if len(SERVER_PORT) == 0:
+        SERVER_PORT = None
+except KeyError:
+    logging.warning('SERVER_PORT not provided!')
+    SERVER_PORT = None
 
 updater = tg.Updater(token=BOT_TOKEN)
 bot = updater.bot
