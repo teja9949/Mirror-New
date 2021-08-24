@@ -106,9 +106,7 @@ sudo docker run mirrorbot
 - **AUTO_DELETE_MESSAGE_DURATION**: interval of time (in seconds), after which the bot deletes it's message (and command message) which is expected to be viewed instantly. (Note: Set to -1 to never automatically delete messages)
 - **TELEGRAM_API**: This is to authenticate to your Telegram account for downloading Telegram files. You can get this from https://my.telegram.org DO NOT put this in quotes.
 - **TELEGRAM_HASH**: This is to authenticate to your Telegram account for downloading Telegram files. You can get this from https://my.telegram.org
-- **DOWNLOAD_STATUS_UPDATE_INTERVAL**: A short interval of time in seconds after which the Mirror progress message is updated. (I recommend to keep it `5` seconds at least) 
-- **UPSTREAM_REPO**: Link for Bot Upstream Repo, if you want default update, fill `https://github.com/yonu74/Mirror-New`.
-- **UPSTREAM_BRANCH**: Branch name for Bot Upstream Repo, fill `master`.
+- **DOWNLOAD_STATUS_UPDATE_INTERVAL**: A short interval of time in seconds after which the Mirror progress message is updated. (I recommend to keep it `5` seconds at least).
     
 ## Optional Vars
 - **DATABASE_URL**: Your Database URL. See [Generate Database](https://github.com/yuno74/Mirror-New/tree/master#generate-database) to generate database (**NOTE**: If you use database you can save your sudo id permanent using `/addsudo` command)
