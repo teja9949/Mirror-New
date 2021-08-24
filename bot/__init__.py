@@ -32,10 +32,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 LOGGER = logging.getLogger(__name__)
 
-CONFIG_FILE_URL = os.environ.get('CONFIG_FILE_URL', None)
-if CONFIG_FILE_URL is not None:
-    out = subprocess.run(["wget", "-q", "-O", "config.env", CONFIG_FILE_URL])
-    
 load_dotenv('config.env')
 
 Interval = []
@@ -112,7 +108,9 @@ except:
 try:
     BOT_TOKEN = getConfig('BOT_TOKEN')
     parent_id = getConfig('GDRIVE_FOLDER_ID')
+    DOWNLOAD_STATUS_UPDATE_INTERVAL = int(getConfig('DOWNLOAD_STATUS_UPDATE_INTERVAL'))
     OWNER_ID = int(getConfig('OWNER_ID'))
+    AUTO_DELETE_MESSAGE_DURATION = int(getConfig('AUTO_DELETE_MESSAGE_DURATION'))
     TELEGRAM_API = getConfig('TELEGRAM_API')
     TELEGRAM_HASH = getConfig('TELEGRAM_HASH')
 except KeyError as e:
@@ -149,13 +147,12 @@ if DB_URI is not None:
 LOGGER.info("Generating USER_SESSION_STRING")
 app = Client(':memory:', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, bot_token=BOT_TOKEN)
 
-# Generate Telegraph Token
+#Generate Telegraph Token
 sname = ''.join(random.SystemRandom().choices(string.ascii_letters, k=8))
 LOGGER.info("Generating TELEGRAPH_TOKEN using '" + sname + "' name")
 telegraph = Telegraph()
 telegraph.create_account(short_name=sname)
 telegraph_token = telegraph.get_access_token()
-
 
 try:
     STATUS_LIMIT = getConfig('STATUS_LIMIT')
@@ -181,13 +178,12 @@ except KeyError:
     MEGA_PASSWORD = None
 try:
     HEROKU_API_KEY = getConfig('HEROKU_API_KEY')
-except KeyError:
-    logging.warning('HEROKU API KEY not provided!')
-    HEROKU_API_KEY = None
-try:
     HEROKU_APP_NAME = getConfig('HEROKU_APP_NAME')
+    if len(HEROKU_API_KEY) == 0 or len(HEROKU_APP_NAME) == 0:
+        HEROKU_API_KEY = None
+        HEROKU_APP_NAME = None
 except KeyError:
-    logging.warning('HEROKU APP NAME not provided!')
+    HEROKU_API_KEY = None
     HEROKU_APP_NAME = None
 try:
     UPTOBOX_TOKEN = getConfig('UPTOBOX_TOKEN')
@@ -304,14 +300,14 @@ try:
 except KeyError:
     SHORTENER = None
     SHORTENER_API = None
-
-IGNORE_PENDING_REQUESTS = False
 try:
-    if getConfig("IGNORE_PENDING_REQUESTS").lower() == "true":
+    IGNORE_PENDING_REQUESTS = getConfig("IGNORE_PENDING_REQUESTS")
+    if IGNORE_PENDING_REQUESTS.lower() == 'true':
         IGNORE_PENDING_REQUESTS = True
+    else:
+        IGNORE_PENDING_REQUESTS = False
 except KeyError:
-    pass
-
+    IGNORE_PENDING_REQUESTS = False
 try:
     FINISHED_PROGRESS_STR = getConfig('FINISHED_PROGRESS_STR')
     if len(FINISHED_PROGRESS_STR) == 0:
@@ -739,62 +735,6 @@ try:
         DOWNLOAD_DIR = None
 except KeyError:
     DOWNLOAD_DIR = '/usr/src/app/downloads/'
-
-try:
-    SEARCH_BOT = getConfig('SEARCH_BOT')
-    if len(SEARCH_BOT) == 0:
-        SEARCH_BOT = None
-except KeyError:
-    SEARCH_BOT = 'search'
-
-try:
-    INDEX_HOMEPAGE_URL = getConfig('INDEX_HOMEPAGE_URL')
-    if len(INDEX_HOMEPAGE_URL) == 0:
-        INDEX_HOMEPAGE_URL = None
-except KeyError:
-    INDEX_HOMEPAGE_URL = 'https://torrent.animerepublic.workers.dev/0:/'
-
-try:
-    SEARCH_TITLE = getConfig('SEARCH_TITLE')
-    if len(SEARCH_TITLE) == 0:
-        SEARCH_TITLE = None
-except KeyError:
-    SEARCH_TITLE = 'Mirror Bot'
-
-try:
-    OWNER_USERNAME = getConfig('OWNER_USERNAME')
-    if len(OWNER_USERNAME) == 0:
-        OWNER_USERNAME = None
-except KeyError:
-    OWNER_USERNAME = 'arata74'
-
-try:
-    UPSTREAM_BRANCH = getConfig('UPSTREAM_BRANCH')
-    if len(UPSTREAM_BRANCH) == 0:
-        UPSTREAM_BRANCH = None
-except KeyError:
-    UPSTREAM_BRANCH = 'main'
-
-try:
-    UPSTREAM_REPO = getConfig('UPSTREAM_REPO')
-    if len(UPSTREAM_REPO) == 0:
-        UPSTREAM_REPO = None
-except KeyError:
-    UPSTREAM_REPO = 'https://github.com/yuno74/Mirror-New'
-
-try:
-    AUTO_DELETE_MESSAGE_DURATION = getConfig('AUTO_DELETE_MESSAGE_DURATION')
-    if len(AUTO_DELETE_MESSAGE_DURATION) == 0:
-        AUTO_DELETE_MESSAGE_DURATION = None
-except KeyError:
-    AUTO_DELETE_MESSAGE_DURATION = '-1'
-
-try:
-    DOWNLOAD_STATUS_UPDATE_INTERVAL = getConfig('DOWNLOAD_STATUS_UPDATE_INTERVAL')
-    if len(DOWNLOAD_STATUS_UPDATE_INTERVAL) == 0:
-        DOWNLOAD_STATUS_UPDATE_INTERVAL = None
-except KeyError:
-    DOWNLOAD_STATUS_UPDATE_INTERVAL = '10'
 
 updater = tg.Updater(token=BOT_TOKEN)
 bot = updater.bot

@@ -37,7 +37,7 @@ ariaDlManager = AriaDownloadHelper()
 ariaDlManager.start_listener()
 
 class MirrorListener(listeners.MirrorListeners):
-    def __init__(self, bot, update, pswd, isTar=False, extract=False, isZip=False, isQbit=False):
+    def __init__(self, bot, update, pswd, isTar=False, extract=False, isZip=False):
         super().__init__(bot, update)
         self.isTar = isTar
         self.extract = extract
@@ -264,7 +264,8 @@ def _mirror(bot, update, isTar=False, extract=False, isZip=False):
     if pswd is not None:
       pswd = pswd.groups()
       pswd = " ".join(pswd)
-    LOGGER.info(link)
+    if link != '':
+        LOGGER.info(link)
     link = link.strip()
     reply_to = update.message.reply_to_message
     if reply_to is not None:

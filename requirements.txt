@@ -34,4 +34,3 @@ torrentool
 urllib3
 youtube_dl
 yt-dlp
-quoters

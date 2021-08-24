@@ -4,7 +4,7 @@ import os
 import asyncio
 
 from pyrogram import idle
-from bot import app, SUPPORT_LINK, CHANNEL_LINK, AUTHORIZED_CHATS, TIMEZONE, RESTARTED_GROUP_ID, RESTARTED_GROUP_ID2
+from bot import app, SUPPORT_LINK, CHANNEL_LINK, AUTHORIZED_CHATS, TIMEZONE, RESTARTED_GROUP_ID2
 from sys import executable
 from datetime import datetime
 import pytz
@@ -20,7 +20,7 @@ from bot.helper.telegram_helper.message_utils import *
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper import button_build
-from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, usage, count, updates, look
+from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, usage, count
 now=datetime.now(pytz.timezone(f'{TIMEZONE}'))
 
 
@@ -66,7 +66,7 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
         else :
             sendMarkup(start_string, context.bot, update, reply_markup)
     else :
-        sendMarkup(f"Oops! not a Authorized user.\nPlease deploy your own <b>Mirror Bot</b>.", context.bot, update, reply_markup)
+        sendMessage(f"Oops! not a Authorized user.", context.bot, update)
 
 
 def restart(update, context):
@@ -110,8 +110,6 @@ def bot_help(update, context):
 
 /{BotCommands.ListCommand} [search term]: Searches the search term in the Google Drive, If found replies with the link
 
-/{BotCommands.LookCommand} [search term]: Searches the for all drive
-
 /{BotCommands.StatusCommand}: Shows a status of all the downloads
 
 /{BotCommands.StatsCommand}: Show Stats of the machine the bot is hosted on
@@ -127,8 +125,6 @@ def bot_help(update, context):
 /{BotCommands.RmSudoCommand}: Remove sudo users (Only Owner)
 
 /{BotCommands.RestartCommand}: Restart the bot
-
-/{BotCommands.UpdateCommand}: Update Bot from Upstream Repo (Owner Only)
 
 /{BotCommands.UsageCommand}: To see Heroku Dyno Stats (Owner & Sudo only)
 
@@ -158,13 +154,9 @@ def bot_help(update, context):
 
 /{BotCommands.ListCommand} [search term]: Searches the search term in the Google Drive, If found replies with the link
 
-/{BotCommands.LookCommand} [search term]: Searches the for all drive
-
 /{BotCommands.StatusCommand}: Shows a status of all the downloads
 
-/{BotCommands.UsageCommand}: To see Heroku Dyno Stats (Owner & Sudo only)
-
-/{BotCommands.UpdateCommand}: Update Bot from Upstream Repo (Owner Only)
+/{BotCommands.UsageCommand}: To see Heroku Dyno Stats (Owner & Sudo only).
 
 /{BotCommands.StatsCommand}: Show Stats of the machine the bot is hosted on
 '''
@@ -195,8 +187,6 @@ botcmds = [
         (f'{BotCommands.AuthorizeCommand}','Auth chat [owner/sudo only]'),
         (f'{BotCommands.UnAuthorizeCommand}','Unauth chat [owner/sudo only]'),
         (f'{BotCommands.UsageCommand}','See dyno [owner/sudo only]'),
-        (f'{BotCommands.UpdateCommand}','Update Bot from Upstream Repo [owner/sudo only]'),
-        (f'{BotCommands.LookCommand}','Searches files in All Drive'),
         (f'{BotCommands.AddSudoCommand}','Add sudo [owner/sudo only]'),
         (f'{BotCommands.RmSudoCommand}','Remove sudo [owner/sudo only]')
     ]
