@@ -137,9 +137,11 @@ def get_readable_message():
                     except:
                         pass
                     try:
-                        msg += f"\n<b>⚙️ 𝙴𝙽𝙶𝙸𝙽𝙴: 🅐🅡🅘🅐</b>\n<b>🌍:</b> {download.aria_download().connections} | <b>🌱:</b> {download.aria_download().num_seeders}"
-                    except:
                         msg += f"\n<b>⚙️ 𝙴𝙽𝙶𝙸𝙽𝙴: 🅐🅡🅘🅐</b>\n<b>📶:</b> {download.aria_download().connections}"
+                    except:
+                        pass
+                    try:
+                        msg += f" | <b>🌱:</b> {download.aria_download().num_seeders}"
                         pass    
                     msg += f"\n<b>⛔ 𝙲𝙰𝙽𝙲𝙴𝙻:</b> <code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += "\n\n"
