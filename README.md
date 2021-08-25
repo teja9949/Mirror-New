@@ -1,8 +1,34 @@
-# MIRROR-NEW
+# <b>MIRROR-NEW</b>
 
-![MIRROR-NEW](xcoders.jpg)
+![MIRROR-NEW](https://sinnerdrive.jack-need-boost.workers.dev/0:/mirr//20210824_150544_1_1.jpg)
+
+<p>
+  <a href="https://www.python.org">
+    <img src="http://ForTheBadge.com/images/badges/made-with-python.svg">
+
+  </a>
+</P>
+
+<p>
+  <a href="https://github.com/yuno74/Mirror-New/stargazers">
+    <img src="https://img.shields.io/github/stars/yuno74/Mirror-New?style=social">
+
+  </a>
+  
+  <a href="https://github.com/yuno74/Mirror-New/fork">
+    <img src="https://img.shields.io/github/forks/yuno74/Mirror-New?label=Fork&style=social">
+
+  </a>
+</p>
 
 **This Mirror Bot** is a _multipurpose_ Telegram Bot writen in Python for mirroring files on the Internet to our beloved Google Drive.
+
+# Support chat
+
+<a href="https://t.me/XcodersHubChat">
+    <img src="https://sinnerdrive.jack-need-boost.workers.dev/0:/mirr//xcoders%20%282%29.jpg">
+
+</a>
 
 # Features supported:
 <details>
