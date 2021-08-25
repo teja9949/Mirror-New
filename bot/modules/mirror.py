@@ -313,11 +313,11 @@ def _mirror(bot, update, isTar=False, extract=False, isZip=False, isQbit=False):
         tag = None
     if not bot_utils.is_url(link) and not bot_utils.is_magnet(link):
         if isTar:
-            sendMessage(f"<b><i>No download source provided</i></b>\n\n<b>Support Format:\n*Google drive link\nYoutube(only tar)\n*Direct link\nMega Link\nMagnet\n*Torrent link\nTorrent File(.torrent, need reply)\nTelegram File(need reply)</b>\n\n•Use /{BotCommands.TarMirrorCommand} for make tar\n•Use /{BotCommands.ZipMirrorCommand} for make zip", bot, update)
+            sendMessage(f"<b><i>No download source provided</i></b>\n\n<b>Support Format:\n❋Google drive link\n❋Youtube link(only tar)\n❋Direct link\n❋Mega Link\n❋Magnet\n❋Torrent link\n❋Torrent File(.torrent, need reply)\n❋Telegram File(need reply)</b>\n\n•Use /{BotCommands.TarMirrorCommand} for make tar\n•Use /{BotCommands.ZipMirrorCommand} for make zip", bot, update)
         elif extract:
-            sendMessage(f"<b><i>No download source provided</i></b>\n\n<b>Support Format:\n*Google drive link\nYoutube(only tar)\n*Direct link\nMega Link\nMagnet\n*Torrent link\nTorrent File(.torrent, need reply)\nTelegram File(need reply)</b>\n\n•Use /{BotCommands.UnzipMirrorCommand} for extract file", bot, update)
+            sendMessage(f"<b><i>No download source provided</i></b>\n\n<b>Support Format:\n❋Google drive link\n❋Direct link\n❋Mega Link\n❋Magnet\n❋Torrent link\n❋Torrent File(.torrent, need reply)\n❋Telegram File(need reply)</b>\n\n•Use /{BotCommands.UnzipMirrorCommand} for extract file", bot, update)
         else:
-            sendMessage(f"<b><i>No download source provided</i></b>\n\n<b>Support link:\n*Google drive link\nYoutube(only tar)\n*Direct link\nMega Link\nMagnet\n*Torrent link\nTorrent File(.torrent, need reply)\nTelegram File(need reply)</b>\n\n<b>•Use /{BotCommands.MirrorCommand} for mirror file", bot, update)
+            sendMessage(f"<b><i>No download source provided</i></b>\n\n<b>Support Format:\n❋Google drive link\n❋Direct link\n❋Mega Link\n❋Magnet\n❋Torrent link\n❋Torrent File(.torrent, need reply)\n❋Telegram File(need reply)</b>\n\n•Use /{BotCommands.MirrorCommand} for mirror file", bot, update)
         return
     if not os.path.exists(link) and not bot_utils.is_mega_link(link) and not bot_utils.is_gdrive_link(link) and not bot_utils.is_magnet(link):
         try:
