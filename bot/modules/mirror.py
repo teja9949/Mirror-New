@@ -270,6 +270,7 @@ def _mirror(bot, update, isTar=False, extract=False, isZip=False):
     reply_to = update.message.reply_to_message
     if reply_to is not None:
         file = None
+        tag = reply_to.from_user.username
         media_array = [reply_to.document, reply_to.video, reply_to.audio]
         for i in media_array:
             if i is not None:
@@ -286,9 +287,19 @@ def _mirror(bot, update, isTar=False, extract=False, isZip=False):
                     return
                 else:
                     link = file.get_file().file_path
+    else:
+        tag = None
     if not bot_utils.is_url(link) and not bot_utils.is_magnet(link):
-        sendMessage('No download source provided', bot, update)
+        if isTar:
+            sendMessage(f"<b><i>No download source provided</i></b>\n\n<b>If you don't know how to use bots check others message</b>\n\n<b>Example :- /{BotCommands.TarMirrorCommand} <i>(Your Torrent Magnet, GDrive Link, DDL Or Mega.nz Links)</i></b>\n<b><i>For Torrent And Telegram Files , Reply to the File with</i></b> /{BotCommands.TarMirrorCommand}", bot, update)
+        elif extract:
+            sendMessage(f"<b><i>No download source provided</i></b>\n\n<b>If you don't know how to use bots check others message</b>\n\n<b>Example :- /{BotCommands.UnzipMirrorCommand} <i>(Your Torrent Magnet, GDrive Link, DDL Or Mega.nz Links)</i></b>\n<b><i>For Torrent And Telegram Files , Reply to the File with</i></b> /{BotCommands.UnzipMirrorCommand}", bot, update)
+        elif isZip:
+            sendMessage(f"<b><i>No download source provided</i></b>\n\n<b>If you don't know how to use bots check others message</b>\n\n<b>Example :- /{BotCommands.ZipMirrorCommand} <i>(Your Torrent Magnet, GDrive Link, DDL Or Mega.nz Links)</i></b>\n<b><i>For Torrent And Telegram Files , Reply to the File with</i></b> /{BotCommands.ZipMirrorCommand}", bot, update)
+        else:
+            sendMessage(f"<b><i>No download source provided</i></b>\n\n<b>If you don't know how to use bots check others message</b>\n\n<b>Example :- /{BotCommands.MirrorCommand} <i>(Your Torrent Magnet, DDL Or Mega.nz Links)</i></b>\n<b><i>For Torrent And Telegram Files , Reply to the File with</i></b> /{BotCommands.MirrorCommand}", bot, update)
         return
+        
     if not os.path.exists(link) and not bot_utils.is_mega_link(link) and not bot_utils.is_gdrive_link(link) and not bot_utils.is_magnet(link):
         try:
             link = direct_link_generator(link)
@@ -305,7 +316,7 @@ def _mirror(bot, update, isTar=False, extract=False, isZip=False):
 
     if bot_utils.is_gdrive_link(link):
         if not isTar and not extract:
-            sendMessage(f"Use /{BotCommands.CloneCommand} to clone Google Drive file/folder\nUse /{BotCommands.TarMirrorCommand} to make tar of Google Drive folder\nUse /{BotCommands.UnzipMirrorCommand} to extracts archive Google Drive file", bot, update)
+            sendMessage(f"•Use /{BotCommands.CloneCommand} to clone Google Drive file/folder\n•Use /{BotCommands.TarMirrorCommand} to make tar of Google Drive folder\n•Use /{BotCommands.ZipMirrorCommand} to make zip of Google Drive folder\n•Use /{BotCommands.UnzipMirrorCommand} to extracts archive Google Drive file", bot, update)
             return
         res, size, name, files = gdriveTools.GoogleDriveHelper().clonehelper(link)
         if res != "":
