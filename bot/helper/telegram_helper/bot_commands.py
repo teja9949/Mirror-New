@@ -8,7 +8,7 @@ def getCommand(name: str, command: str):
     except KeyError:
         return command
 
-    class _BotCommands:
+class _BotCommands:
     def __init__(self):
         self.StartCommand = getCommand('START_BOT', 'start')
         self.MirrorCommand = getCommand('MIRROR_BOT', 'mir')
